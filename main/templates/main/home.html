@@ -362,6 +362,24 @@
                 inset 0 1px 0 rgba(255,255,255,0.4),
                 inset 0 -1px 0 rgba(0,0,0,0.1);
         }
+
+        .sofa-calculado.sofa-verde {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            box-shadow: 
+                0 8px 32px rgba(46, 204, 113, 0.4),
+                0 4px 16px rgba(39, 174, 96, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.4),
+                inset 0 -1px 0 rgba(0,0,0,0.1);
+        }
+
+        .sofa-calculado.sofa-verde {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            box-shadow: 
+                0 8px 32px rgba(46, 204, 113, 0.4),
+                0 4px 16px rgba(39, 174, 96, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.4),
+                inset 0 -1px 0 rgba(0,0,0,0.1);
+        }
         
         .sofa-calculado.sofa-amarillo {
             background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
@@ -913,41 +931,40 @@
         function actualizarSOFA() {
             const sofaContainer = document.getElementById('sofaContainer');
             const sofaValue = document.getElementById('sofaValue');
-            const sofaBreakdown = document.getElementById('sofaBreakdown');
-            
-            // Limpiar clases de color previas
-            sofaContainer.classList.remove('sofa-gris', 'sofa-verde', 'sofa-amarillo', 'sofa-naranja', 'sofa-rojo', 'sofa-rojo-intenso');
-            
-            const { total, breakdown } = calcularSOFA();
-            
-            if (total > 0 || total === 0) {
-                sofaValue.textContent = total;
-                // Actualizar breakdown
-                document.getElementById('sofaResp').textContent = breakdown['Respiratorio'];
-                document.getElementById('sofaCoag').textContent = breakdown['Coagulación'];
-                document.getElementById('sofaHigado').textContent = breakdown['Hígado'];
-                document.getElementById('sofaCardio').textContent = breakdown['Cardiovascular'];
-                document.getElementById('sofaNeuro').textContent = breakdown['Neurológico'];
-                document.getElementById('sofaRenal').textContent = breakdown['Renal'];
-                sofaBreakdown.style.display = 'block';
-                // Colores según resultado
-                if (total === 0 || total === 1) {
-                    sofaContainer.classList.add('sofa-verde');
-                } else if (total >= 2 && total <= 6) {
-                    sofaContainer.classList.add('sofa-amarillo');
-                } else if (total >= 7 && total <= 9) {
-                    sofaContainer.classList.add('sofa-naranja');
-                } else if (total >= 10 && total <= 12) {
-                    sofaContainer.classList.add('sofa-rojo');
-                } else if (total >= 13) {
-                    sofaContainer.classList.add('sofa-rojo-intenso');
-                } else {
-                    sofaContainer.classList.add('sofa-gris');
-                }
-            } else {
-                sofaValue.textContent = '--';
-                sofaBreakdown.style.display = 'none';
-                sofaContainer.classList.add('sofa-gris');
+
+            // Obtener valores de los inputs necesarios
+            const pao2fio2 = document.querySelectorAll('.variable-input-small')[1].value;
+            const plaquetas = document.querySelectorAll('.variable-input-small')[2].value;
+            const bilirrubina = document.querySelectorAll('.variable-input-small')[3].value;
+            const tam = document.querySelectorAll('.variable-input-small')[4].value;
+            const glasgow = document.querySelectorAll('.variable-select')[1].value;
+            const creatinina = document.querySelector('.variable-input-small').value;
+
+            // Si falta algún dato necesario, mostrar '--' y quitar colores
+            if (!pao2fio2 || !plaquetas || !bilirrubina || !tam || !glasgow || !creatinina) {
+                sofaValue.innerText = '--';
+                sofaContainer.classList.remove('sofa-gris', 'sofa-verde', 'sofa-amarillo', 'sofa-rojo');
+                return;
+            }
+
+            // Obtenemos el cálculo (asegúrate que la función calcularSOFA devuelva el total)
+            const resultado = calcularSOFA();
+            const total = resultado.total;
+
+            // Actualizamos el número en pantalla
+            sofaValue.innerText = total;
+
+            // Lógica de cambio de colores
+            // 1. Limpiamos todas las clases de colores previas
+            sofaContainer.classList.remove('sofa-gris', 'sofa-verde', 'sofa-amarillo', 'sofa-rojo');
+
+            // 2. Asignamos la nueva clase según el puntaje
+            if (total <= 1) {
+                sofaContainer.classList.add('sofa-verde'); // 0-1 puntos: Verde
+            } else if (total >= 2 && total <= 6) {
+                sofaContainer.classList.add('sofa-amarillo'); // 2-6 puntos: Amarillo
+            } else if (total > 6) {
+                sofaContainer.classList.add('sofa-rojo'); // >6 puntos: Rojo
             }
         }
         
@@ -1134,23 +1151,23 @@
             });
         });
         
-        // Event listeners
+        // Escuchadores para CKD-EPI y SOFA
         document.addEventListener('DOMContentLoaded', function() {
+            // Edad
             const edadInput = document.querySelector('.variable-input');
-            const sexoSelect = document.querySelector('.variable-select');
-            const creatininaInput = document.querySelector('.variable-input-small');
-            const glasgowSelect = document.querySelectorAll('.variable-select')[1]; // El segundo select (Glasgow)
-            const allSOFAInputs = document.querySelectorAll('.variable-input-small');
-            
             if (edadInput) {
                 edadInput.addEventListener('input', validarEdad);
                 edadInput.addEventListener('change', validarEdad);
             }
-            
+
+            // Sexo
+            const sexoSelect = document.querySelector('.variable-select');
             if (sexoSelect) {
                 sexoSelect.addEventListener('change', actualizarTFG);
             }
-            
+
+            // Creatinina
+            const creatininaInput = document.querySelector('.variable-input-small');
             if (creatininaInput) {
                 creatininaInput.addEventListener('input', function() {
                     checkCreatinina();
@@ -1161,45 +1178,11 @@
                     actualizarSOFA();
                 });
             }
-            
-            if (glasgowSelect) {
-                glasgowSelect.addEventListener('change', function() {
-                    console.log('Glasgow seleccionado:', glasgowSelect.value);
-                    actualizarSOFA();
-                });
-            }
-            
-            // Agregar listeners a todos los inputs de SOFA
-            allSOFAInputs.forEach(function(input, index) {
-                if (index > 0) { // Saltar creatinina (ya tiene listener)
-                    input.addEventListener('input', actualizarSOFA);
-                    input.addEventListener('change', actualizarSOFA);
-                }
-            });
-            
-            // Agregar listeners a los vasopresores
-            const vasopresores = ['dopamina', 'noradrenalina', 'adrenalina', 'dobutamina'];
-            vasopresores.forEach(function(vasopresor) {
-                const radio = document.getElementById(vasopresor);
-                let dosisInputId;
-                
-                // Mapear correctamente los IDs de dosis
-                switch(vasopresor) {
-                    case 'dopamina': dosisInputId = 'dosisDopaInput'; break;
-                    case 'noradrenalina': dosisInputId = 'dosisNoradreInput'; break;
-                    case 'adrenalina': dosisInputId = 'dosisAdreInput'; break;
-                    case 'dobutamina': dosisInputId = 'dosisDobuInput'; break;
-                }
-                
-                const dosisInput = document.getElementById(dosisInputId);
-                
-                if (radio) {
-                    radio.addEventListener('change', actualizarSOFA);
-                }
-                if (dosisInput) {
-                    dosisInput.addEventListener('input', actualizarSOFA);
-                    dosisInput.addEventListener('change', actualizarSOFA);
-                }
+
+            // Inputs y selects para SOFA
+            document.querySelectorAll('input, select').forEach(elemento => {
+                elemento.addEventListener('change', actualizarSOFA);
+                elemento.addEventListener('keyup', actualizarSOFA);
             });
         });
     </script>
