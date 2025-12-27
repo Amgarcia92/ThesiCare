@@ -1,0 +1,1 @@
+web: gunicorn ThesiCare.wsgi --log-file -
