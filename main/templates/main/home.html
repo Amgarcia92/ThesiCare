@@ -70,8 +70,13 @@
         
         .contenedor-horizontal {
             display: flex;
-            gap: 10px;
+            gap: 0;
             margin-bottom: 0;
+        }
+        
+        /* Eliminar espacio entre Glasgow y SOFA */
+        #sofaContainer {
+            margin-top: 0 !important;
         }
         
         .variable-container.high-value {
@@ -278,6 +283,137 @@
             letter-spacing: 0.2px;
         }
         
+        /* CONTENEDOR DE RESULTADOS SOFA */
+        .sofa-calculado {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            border: none;
+            box-shadow: 0 8px 32px rgba(149, 165, 166, 0.4), 0 4px 16px rgba(127, 140, 141, 0.2), inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-top: 0;
+        }
+        
+        .sofa-calculado::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+        
+        .sofa-calculado:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 12px 40px rgba(139, 92, 246, 0.5),
+                0 6px 20px rgba(124, 58, 237, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.5);
+        }
+        
+        .sofa-calculado:hover::before {
+            left: 50%;
+        }
+        
+        .sofa-titulo {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .sofa-valor {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin-bottom: 2px;
+        }
+        
+        .sofa-unidad {
+            font-size: 0.5rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            letter-spacing: 0.2px;
+        }
+        
+        .sofa-calculado.sofa-gris {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            box-shadow: 
+                0 8px 32px rgba(149, 165, 166, 0.4),
+                0 4px 16px rgba(127, 140, 141, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.4),
+                inset 0 -1px 0 rgba(0,0,0,0.1);
+        }
+        
+        .sofa-calculado.sofa-amarillo {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            box-shadow: 
+                0 8px 32px rgba(243, 156, 18, 0.4),
+                0 4px 16px rgba(230, 126, 34, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.4),
+                inset 0 -1px 0 rgba(0,0,0,0.1);
+        }
+        
+        .sofa-calculado.sofa-rojo {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            box-shadow: 
+                0 8px 32px rgba(231, 76, 60, 0.4),
+                0 4px 16px rgba(192, 57, 43, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.4),
+                inset 0 -1px 0 rgba(0,0,0,0.1);
+        }
+        
+        .sofa-breakdown {
+            margin-top: 8px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .sofa-sistema {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .sofa-sistema:last-child {
+            margin-bottom: 0;
+        }
+        
+        .sofa-sistema-nombre {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .sofa-sistema-valor {
+            font-weight: 600;
+            min-width: 12px;
+            text-align: right;
+        }
+        
         .edad-message {
             position: absolute;
             top: -35px;
@@ -315,6 +451,223 @@
             }
         }
         
+        .variable-link {
+            color: #2563eb;
+            font-size: 0.6rem;
+            text-decoration: none;
+            margin-top: 2px;
+            display: block;
+            text-align: center;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .variable-link:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+        
+        .vasopresor-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .vasopresor-modal {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            width: 250px;
+            max-width: 90vw;
+        }
+        
+        .vasopresor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .vasopresor-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .vasopresor-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .vasopresor-option {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        
+        .vasopresor-option:hover {
+            background: #f8f9fa;
+        }
+        
+        .vasopresor-option input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.1);
+        }
+        
+        .vasopresor-option label {
+            font-size: 0.75rem;
+            color: #333;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .dosis-field {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 5px;
+            margin-bottom: 8px;
+        }
+        
+        .dosis-label {
+            display: block;
+            font-size: 0.7rem;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .dosis-input {
+            width: 100%;
+            padding: 5px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            box-sizing: border-box;
+        }
+        
+        .dosis-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+        
+        /* CONTENEDOR DE RESULTADOS SOFA */
+        /* Eliminada la versión morada, solo queda la gris como base en .sofa-calculado */
+        
+        .sofa-titulo {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .sofa-valor {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin-bottom: 2px;
+        }
+        
+        .sofa-unidad {
+            font-size: 0.5rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            letter-spacing: 0.2px;
+        }
+        
+        .sofa-calculado.sofa-gris {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+        }
+        
+        .sofa-calculado.sofa-amarillo {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+        
+        .sofa-calculado.sofa-rojo {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+        
+        .sofa-breakdown {
+            margin-top: 8px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .sofa-sistema {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .sofa-sistema:last-child {
+            margin-bottom: 0;
+        }
+        
+        .sofa-sistema-nombre {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .sofa-sistema-valor {
+            font-weight: 600;
+            min-width: 12px;
+            text-align: right;
+        }
+        
 
     </style>
 </head>
@@ -341,15 +694,27 @@
         </div>
     </div>
 
-    <!-- Contenedor de Variable - Sexo -->
-    <div class="variable-container">
-        <div class="variable-title">SEXO</div>
-        <select class="variable-select">
-            <option value="">-</option>
-            <option value="M">M</option>
-            <option value="F">F</option>
-        </select>
+    <!-- Contenedor horizontal para SEXO y SOFA -->
+    <div class="contenedor-horizontal" style="margin-top: 0;">
+        <!-- Contenedor de Variable - Sexo -->
+        <div class="variable-container">
+            <div class="variable-title">SEXO</div>
+            <select class="variable-select">
+                <option value="">-</option>
+                <option value="M">M</option>
+                <option value="F">F</option>
+            </select>
+        </div>
+
+        <!-- Contenedor de Resultados SOFA -->
+        <div class="variable-container sofa-calculado" id="sofaContainer">
+            <div class="sofa-titulo">ESCALA SOFA</div>
+            <div class="sofa-valor" id="sofaValue">--</div>
+            <div class="sofa-unidad">Puntuación Total</div>
+        </div>
     </div>
+
+
 
     <!-- Contenedor de Variable - Creatinina -->
     <div class="variable-container">
@@ -357,7 +722,235 @@
         <input type="number" class="variable-input-small" step="0.01">
     </div>
 
+    <!-- Contenedor de Variable - PaO₂/FiO₂ -->
+    <div class="variable-container">
+        <div class="variable-title">PaO₂/FiO₂ <span class="variable-unit">(mmHg)</span></div>
+        <input type="number" class="variable-input-small" step="1">
+    </div>
+
+    <!-- Contenedor de Variable - Plaquetas -->
+    <div class="variable-container">
+        <div class="variable-title">PLAQUETAS <span class="variable-unit">(miles/mm³)</span></div>
+        <input type="number" class="variable-input-small" step="1">
+    </div>
+
+    <!-- Contenedor de Variable - Bilirrubina Total -->
+    <div class="variable-container">
+        <div class="variable-title">BILIRRUBINA TOT <span class="variable-unit">(mg/dL)</span></div>
+        <input type="number" class="variable-input-small" step="0.1">
+    </div>
+
+    <!-- Contenedor de Variable - TAM -->
+    <div class="variable-container">
+        <div class="variable-title">TAM <span class="variable-unit">(mmHg)</span></div>
+        <input type="number" class="variable-input-small" step="1">
+        <a href="#" class="variable-link" onclick="toggleVasopresorPanel()">¿Usa vasopresor?</a>
+    </div>
+
+    <!-- Modal Overlay para vasopresores -->
+    <div id="vasopresorOverlay" class="vasopresor-overlay">
+        <div class="vasopresor-modal">
+            <div class="vasopresor-header">
+                <div class="vasopresor-title">Seleccionar vasopresor:</div>
+                <button onclick="closeVasopresorPanel()" class="modal-close-btn">✕</button>
+            </div>
+            <div class="vasopresor-content">
+                <div class="vasopresor-option">
+                    <input type="radio" id="dopamina" name="vasopresor" value="dopamina" onchange="toggleDosisField()">
+                    <label for="dopamina">Dopamina</label>
+                </div>
+                <div id="dosisDopa" class="dosis-field">
+                    <label for="dosisDopaInput" class="dosis-label">Dosis (µg/kg/min):</label>
+                    <input type="number" id="dosisDopaInput" class="dosis-input" step="0.1" min="0">
+                </div>
+                
+                <div class="vasopresor-option">
+                    <input type="radio" id="noradrenalina" name="vasopresor" value="noradrenalina" onchange="toggleDosisField()">
+                    <label for="noradrenalina">Noradrenalina</label>
+                </div>
+                <div id="dosisNoradre" class="dosis-field">
+                    <label for="dosisNoradreInput" class="dosis-label">Dosis (µg/kg/min):</label>
+                    <input type="number" id="dosisNoradreInput" class="dosis-input" step="0.01" min="0">
+                </div>
+                
+                <div class="vasopresor-option">
+                    <input type="radio" id="adrenalina" name="vasopresor" value="adrenalina" onchange="toggleDosisField()">
+                    <label for="adrenalina">Adrenalina</label>
+                </div>
+                <div id="dosisAdre" class="dosis-field">
+                    <label for="dosisAdreInput" class="dosis-label">Dosis (µg/kg/min):</label>
+                    <input type="number" id="dosisAdreInput" class="dosis-input" step="0.01" min="0">
+                </div>
+                
+                <div class="vasopresor-option">
+                    <input type="radio" id="dobutamina" name="vasopresor" value="dobutamina" onchange="toggleDosisField()">
+                    <label for="dobutamina">Dobutamina</label>
+                </div>
+                <div id="dosisDobu" class="dosis-field">
+                    <label for="dosisDobuInput" class="dosis-label">Dosis (µg/kg/min):</label>
+                    <input type="number" id="dosisDobuInput" class="dosis-input" step="0.1" min="0">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor de Variable - Glasgow -->
+    <div class="variable-container">
+        <div class="variable-title">GLASGOW</div>
+        <select class="variable-select">
+            <option value="">-</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+        </select>
+    </div>
+
     <script>
+        // Funciones para calcular SOFA
+        function calcularSOFA() {
+            // Obtener valores de los contenedores
+            const pao2fio2 = parseFloat(document.querySelectorAll('.variable-input-small')[1].value) || null;
+            const plaquetas = parseFloat(document.querySelectorAll('.variable-input-small')[2].value) || null;
+            const bilirrubina = parseFloat(document.querySelectorAll('.variable-input-small')[3].value) || null;
+            const tam = parseFloat(document.querySelectorAll('.variable-input-small')[4].value) || null;
+            const glasgow = parseInt(document.querySelectorAll('.variable-select')[1].value) || null;
+            const creatinina = parseFloat(document.querySelector('.variable-input-small').value) || null;
+            
+            // Obtener datos de vasopresores
+            const dopamiaDosis = parseFloat(document.getElementById('dosisDopaInput').value) || null;
+            const noradrenDosis = parseFloat(document.getElementById('dosisNoradreInput').value) || null;
+            const adrenDosis = parseFloat(document.getElementById('dosisAdreInput').value) || null;
+            const dobutDosis = parseFloat(document.getElementById('dosisDobuInput').value) || null;
+            
+            // Determinar qué vasopresor está activo
+            const dopamina = document.getElementById('dopamina').checked ? dopamiaDosis : null;
+            const noradrenalina = document.getElementById('noradrenalina').checked ? noradrenDosis : null;
+            const adrenalina = document.getElementById('adrenalina').checked ? adrenDosis : null;
+            const dobutamina = document.getElementById('dobutamina').checked ? dobutDosis : null;
+            
+            // Funciones de cálculo SOFA (traducidas de Python)
+            function resp(pf) {
+                if (pf === null) return 0;
+                if (pf >= 400) return 0;
+                else if (pf >= 300) return 1;
+                else if (pf >= 200) return 2;
+                else if (pf >= 100) return 3;
+                else return 4;
+            }
+            
+            function coag(plaq) {
+                if (plaq === null) return 0;
+                if (plaq >= 150) return 0;
+                else if (plaq >= 100) return 1;
+                else if (plaq >= 50) return 2;
+                else if (plaq >= 20) return 3;
+                else return 4;
+            }
+            
+            function higado(bili) {
+                if (bili === null) return 0;
+                if (bili < 1.2) return 0;
+                else if (bili < 2.0) return 1;
+                else if (bili < 6.0) return 2;
+                else if (bili < 12.0) return 3;
+                else return 4;
+            }
+            
+            function neuro(g) {
+                if (g === null) return 0;
+                if (g === 15) return 0;
+                else if (g >= 13) return 1;
+                else if (g >= 10) return 2;
+                else if (g >= 6) return 3;
+                else return 4;
+            }
+            
+            function cardio(tam, dopa, dobu, norepi, epi) {
+                dopa = dopa || 0;
+                dobu = dobu || 0;
+                norepi = norepi || 0;
+                epi = epi || 0;
+                if (dopa > 15 || norepi > 0.1 || epi > 0.1) return 4;
+                if (dopa > 5 || (0 < norepi && norepi <= 0.1) || (0 < epi && epi <= 0.1)) return 3;
+                if ((0 < dopa && dopa <= 5) || dobu > 0) return 2;
+                if (tam !== null && tam < 70) return 1;
+                return 0;
+            }
+            
+            function renal(creat) {
+                if (creat === null) return 0;
+                if (creat < 1.2) return 0;
+                else if (creat < 2.0) return 1;
+                else if (creat < 3.5) return 2;
+                else if (creat < 5.0) return 3;
+                else return 4;
+            }
+            
+            // Calcular puntajes por sistema
+            const breakdown = {
+                "Respiratorio": resp(pao2fio2),
+                "Coagulación": coag(plaquetas),
+                "Hígado": higado(bilirrubina),
+                "Cardiovascular": cardio(tam, dopamina, dobutamina, noradrenalina, adrenalina),
+                "Neurológico": neuro(glasgow),
+                "Renal": renal(creatinina)
+            };
+            
+            const total = Object.values(breakdown).reduce((a, b) => a + b, 0);
+            return { total, breakdown };
+        }
+        
+        function actualizarSOFA() {
+            const sofaContainer = document.getElementById('sofaContainer');
+            const sofaValue = document.getElementById('sofaValue');
+            const sofaBreakdown = document.getElementById('sofaBreakdown');
+            
+            // Limpiar clases de color previas
+            sofaContainer.classList.remove('sofa-gris', 'sofa-verde', 'sofa-amarillo', 'sofa-naranja', 'sofa-rojo', 'sofa-rojo-intenso');
+            
+            const { total, breakdown } = calcularSOFA();
+            
+            if (total > 0 || total === 0) {
+                sofaValue.textContent = total;
+                // Actualizar breakdown
+                document.getElementById('sofaResp').textContent = breakdown['Respiratorio'];
+                document.getElementById('sofaCoag').textContent = breakdown['Coagulación'];
+                document.getElementById('sofaHigado').textContent = breakdown['Hígado'];
+                document.getElementById('sofaCardio').textContent = breakdown['Cardiovascular'];
+                document.getElementById('sofaNeuro').textContent = breakdown['Neurológico'];
+                document.getElementById('sofaRenal').textContent = breakdown['Renal'];
+                sofaBreakdown.style.display = 'block';
+                // Colores según resultado
+                if (total === 0 || total === 1) {
+                    sofaContainer.classList.add('sofa-verde');
+                } else if (total >= 2 && total <= 6) {
+                    sofaContainer.classList.add('sofa-amarillo');
+                } else if (total >= 7 && total <= 9) {
+                    sofaContainer.classList.add('sofa-naranja');
+                } else if (total >= 10 && total <= 12) {
+                    sofaContainer.classList.add('sofa-rojo');
+                } else if (total >= 13) {
+                    sofaContainer.classList.add('sofa-rojo-intenso');
+                } else {
+                    sofaContainer.classList.add('sofa-gris');
+                }
+            } else {
+                sofaValue.textContent = '--';
+                sofaBreakdown.style.display = 'none';
+                sofaContainer.classList.add('sofa-gris');
+            }
+        }
+        
         // Función eGFR CKD-EPI 2021 (JavaScript)
         function calcularTFG(creatinina, edad, sexo) {
             if (creatinina <= 0 || edad < 18) return null;
@@ -474,11 +1067,80 @@
             actualizarTFG();
         }
         
+        function toggleVasopresorPanel() {
+            const overlay = document.getElementById('vasopresorOverlay');
+            overlay.style.display = 'flex';
+        }
+        
+        function closeVasopresorPanel() {
+            const overlay = document.getElementById('vasopresorOverlay');
+            overlay.style.display = 'none';
+            // Limpiar selecciones y campos cuando se cierre
+            const radios = document.querySelectorAll('input[name="vasopresor"]');
+            radios.forEach(radio => radio.checked = false);
+            hideDosisFields();
+        }
+        
+        function toggleDosisField() {
+            const dopamina = document.getElementById('dopamina');
+            const noradrenalina = document.getElementById('noradrenalina');
+            const adrenalina = document.getElementById('adrenalina');
+            const dobutamina = document.getElementById('dobutamina');
+            const dosisDopa = document.getElementById('dosisDopa');
+            const dosisNoradre = document.getElementById('dosisNoradre');
+            const dosisAdre = document.getElementById('dosisAdre');
+            const dosisDobu = document.getElementById('dosisDobu');
+            
+            // Ocultar todos los campos primero
+            dosisDopa.style.display = 'none';
+            dosisNoradre.style.display = 'none';
+            dosisAdre.style.display = 'none';
+            dosisDobu.style.display = 'none';
+            
+            // Mostrar campo correspondiente
+            if (dopamina.checked) {
+                dosisDopa.style.display = 'block';
+                document.getElementById('dosisDopaInput').focus();
+            } else if (noradrenalina.checked) {
+                dosisNoradre.style.display = 'block';
+                document.getElementById('dosisNoradreInput').focus();
+            } else if (adrenalina.checked) {
+                dosisAdre.style.display = 'block';
+                document.getElementById('dosisAdreInput').focus();
+            } else if (dobutamina.checked) {
+                dosisDobu.style.display = 'block';
+                document.getElementById('dosisDobuInput').focus();
+            }
+        }
+        
+        function hideDosisFields() {
+            document.getElementById('dosisDopa').style.display = 'none';
+            document.getElementById('dosisNoradre').style.display = 'none';
+            document.getElementById('dosisAdre').style.display = 'none';
+            document.getElementById('dosisDobu').style.display = 'none';
+            document.getElementById('dosisDopaInput').value = '';
+            document.getElementById('dosisNoradreInput').value = '';
+            document.getElementById('dosisAdreInput').value = '';
+            document.getElementById('dosisDobuInput').value = '';
+        }
+        
+        // Cerrar modal al hacer clic en el overlay
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('vasopresorOverlay');
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closeVasopresorPanel();
+                }
+            });
+        });
+        
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
             const edadInput = document.querySelector('.variable-input');
             const sexoSelect = document.querySelector('.variable-select');
             const creatininaInput = document.querySelector('.variable-input-small');
+            const glasgowSelect = document.querySelectorAll('.variable-select')[1]; // El segundo select (Glasgow)
+            const allSOFAInputs = document.querySelectorAll('.variable-input-small');
             
             if (edadInput) {
                 edadInput.addEventListener('input', validarEdad);
@@ -490,8 +1152,54 @@
             }
             
             if (creatininaInput) {
-                creatininaInput.addEventListener('input', checkCreatinina);
-                creatininaInput.addEventListener('change', checkCreatinina);
+                creatininaInput.addEventListener('input', function() {
+                    checkCreatinina();
+                    actualizarSOFA();
+                });
+                creatininaInput.addEventListener('change', function() {
+                    checkCreatinina();
+                    actualizarSOFA();
+                });
             }
+            
+            if (glasgowSelect) {
+                glasgowSelect.addEventListener('change', function() {
+                    console.log('Glasgow seleccionado:', glasgowSelect.value);
+                    actualizarSOFA();
+                });
+            }
+            
+            // Agregar listeners a todos los inputs de SOFA
+            allSOFAInputs.forEach(function(input, index) {
+                if (index > 0) { // Saltar creatinina (ya tiene listener)
+                    input.addEventListener('input', actualizarSOFA);
+                    input.addEventListener('change', actualizarSOFA);
+                }
+            });
+            
+            // Agregar listeners a los vasopresores
+            const vasopresores = ['dopamina', 'noradrenalina', 'adrenalina', 'dobutamina'];
+            vasopresores.forEach(function(vasopresor) {
+                const radio = document.getElementById(vasopresor);
+                let dosisInputId;
+                
+                // Mapear correctamente los IDs de dosis
+                switch(vasopresor) {
+                    case 'dopamina': dosisInputId = 'dosisDopaInput'; break;
+                    case 'noradrenalina': dosisInputId = 'dosisNoradreInput'; break;
+                    case 'adrenalina': dosisInputId = 'dosisAdreInput'; break;
+                    case 'dobutamina': dosisInputId = 'dosisDobuInput'; break;
+                }
+                
+                const dosisInput = document.getElementById(dosisInputId);
+                
+                if (radio) {
+                    radio.addEventListener('change', actualizarSOFA);
+                }
+                if (dosisInput) {
+                    dosisInput.addEventListener('input', actualizarSOFA);
+                    dosisInput.addEventListener('change', actualizarSOFA);
+                }
+            });
         });
     </script>
